@@ -6,6 +6,7 @@
     "@sustainer-network/tokens-from-req": "*"
   },
   "scripts": {
+    "start": "node index.js",
     "precommit": "lint-staged && yarn checkbuild",
     "test": "mocha --recursive --timeout 40000",
     "checkbuild": "./.checkbuild.sh"
