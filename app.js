@@ -12,3 +12,5 @@ app.post("/", (req, res) => {
     .then(() => res.send({}))
     .catch(e => res.status(e.statusCode || 500).send(e));
 });
+
+module.exports = app;
