@@ -5,8 +5,7 @@
     "express": "^4.17.1",
     "@sustainer-network/event-store-add-service": "*",
     "@sustainer-network/tokens-from-req": "*",
-    "@sustainer-network/event-store-middleware": "*",
-    "@sustainer-network/logger": "*"
+    "@sustainer-network/event-store-middleware": "*"
   },
   "scripts": {
     "start": "node index.js",

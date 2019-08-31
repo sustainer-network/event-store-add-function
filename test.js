@@ -36,15 +36,11 @@ describe("Event store", () => {
       }
     });
 
-    //eslint-disable-next-line no-console
-    console.log("RESPONSE: ", response);
     expect(response.statusCode).to.equal(200);
     expect(response.body).to.deep.equal(JSON.stringify({}));
   });
   it("should return an error if add is sent incorrect params", async () => {
     const response = await post(`${url}`, { event: { fact: {}, payload: {} } });
-    //eslint-disable-next-line no-console
-    console.log("RESPONSE TWO: ", response);
     expect(response.statusCode).to.be.at.least(400);
   });
 });
