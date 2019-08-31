@@ -12,7 +12,10 @@ app.post("/", (req, res) => {
   logger.info("HI: ", { params: req.body, tokens: tokensFromReq(req) });
   add({ params: req.body, tokens: tokensFromReq(req) })
     .then(() => res.send({}))
-    .catch(e => res.status(e.statusCode || 500).send(e));
+    .catch(e => {
+      logger.error("some ee", { e });
+      res.status(e.statusCode || 500).send(e);
+    });
 });
 
 module.exports = app;
