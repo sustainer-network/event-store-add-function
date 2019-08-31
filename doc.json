@@ -1,0 +1,173 @@
+{
+  "info": {
+    "title": "#_TITLE",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/": {
+      "post": {
+        "summary": "Add an event to the store",
+        "description": "Add an event to the event store with the specified payload and fact.",
+        "security": [],
+        "parameters": [
+          {
+            "schema": {
+              "properties": {
+                "store": {
+                  "type": "string",
+                  "description": "The store in which the event will be saved."
+                },
+                "service": {
+                  "type": "string",
+                  "description": "The service that generated the event."
+                },
+                "event": {
+                  "description": "The event to add",
+                  "type": "object",
+                  "properties": {
+                    "payload": {
+                      "description": "The payload of the event being added.",
+                      "type": "object",
+                      "properties": {}
+                    },
+
+                    "fact": {
+                      "type": "object",
+                      "description": "Metadata describing the context of the event being added.",
+                      "properties": {
+                        "root": {
+                          "description": "The unique value that shared by related events in this store. This is usually a UUID.",
+                          "type": "string"
+                        },
+                        "topic": {
+                          "description": "An enumerated value used to categorize this event.",
+                          "type": "string"
+                        },
+                        "version": {
+                          "description": "The payload schema version of the event for the given topic.",
+                          "type": "number"
+                        },
+                        "traceId": {
+                          "description": "A value passed from the original command issuer to relate subsequent events.",
+                          "type": "string"
+                        },
+                        "createdTimestamp": {
+                          "description": "The timestamp when this event was created.",
+                          "type": "integer"
+                        },
+                        "command": {
+                          "type": "object",
+                          "description": "Details about the command that created this event.",
+                          "properties": {
+                            "id": {
+                              "description": "An identifier of the originating command that resulted in this event being made.",
+                              "type": "string"
+                            },
+                            "action": {
+                              "description": "The action of the command that created this event.",
+                              "type": "string"
+                            },
+                            "domain": {
+                              "description": "The domain of the command that created this event.",
+                              "type": "string"
+                            },
+                            "service": {
+                              "description": "The service of the command that created this event.",
+                              "type": "string"
+                            },
+                            "issuedTimestamp": {
+                              "description": "The timestamp when command that created this event was issued.",
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "action",
+                            "domain",
+                            "service",
+                            "issuedTimestamp"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "root",
+                        "topic",
+                        "version",
+                        "command",
+                        "createdTimestamp"
+                      ]
+                    }
+                  },
+                  "required": ["payload", "fact"]
+                }
+              },
+              "required": ["store", "service", "event"],
+              "example": {
+                "store": "some-store-id",
+                "service": "some-service",
+                "event": {
+                  "fact": {
+                    "root": "aUniqueId1234",
+                    "topic": "someTopic",
+                    "version": 0,
+                    "traceId": "someId",
+                    "createdTimestamp": 124,
+                    "command": {
+                      "instanceId": "someOtherId",
+                      "action": "some-action",
+                      "domain": "somain-domain",
+                      "service": "some-service",
+                      "issuedTimestamp": 123
+                    }
+                  },
+                  "payload": {
+                    "a": 1,
+                    "b": 2
+                  }
+                }
+              },
+              "type": "object"
+            },
+            "name": "body",
+            "in": "body"
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "400": {
+            "description": "The request wasn't formatted correctly."
+          },
+          "401": {
+            "description": "The request wasn't authorized."
+          },
+          "404": {
+            "description": "The function doesn't exist."
+          },
+          "405": {
+            "description": "The method on the requested services doesn't exist."
+          },
+          "409": {
+            "description": "A user specified value was not valid."
+          },
+          "500": {
+            "description": "The server errored unexpectedly. If you receive this error, report it to us immediately."
+          }
+        },
+        "deprecated": false,
+        "operationId": "#_ADD_NAME"
+      }
+    }
+  },
+  "schemes": ["https"],
+  "basePath": "/v1/",
+  "swagger": "2.0",
+  "host": "#_HOST"
+}
