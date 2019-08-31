@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const { post } = require("@sustainer-network/request");
 const uuid = require("@sustainer-network/uuid");
 
-const rootAddress = "https://event-store.core.staging.sustainer.network";
+const url = "https://add.event-store.core.staging.sustainer.network";
 
 const domain = "domain";
 const _service = "the-service-which-stores-this-event";
@@ -10,7 +10,7 @@ const service = "the-service-from-which-this-event-originated";
 
 describe("Event store", () => {
   it("should return successfully from adding", async () => {
-    const response = await post(`${rootAddress}/add`, {
+    const response = await post(`${url}`, {
       domain,
       service: _service,
       event: {
@@ -40,7 +40,7 @@ describe("Event store", () => {
     expect(response.body).to.deep.equal(JSON.stringify({}));
   });
   it("should return an error if add is sent incorrect params", async () => {
-    const response = await post(`${rootAddress}/add`, {});
+    const response = await post(`${url}`, {});
     expect(response.statusCode).to.be.at.least(400);
   });
 });
