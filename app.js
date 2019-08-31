@@ -4,13 +4,17 @@ const app = express();
 const add = require("@sustainer-network/event-store-add-service");
 const tokensFromReq = require("@sustainer-network/tokens-from-req");
 const middleware = require("@sustainer-network/event-store-middleware");
+const logger = require("@sustainer-network/logger");
 
 middleware(app);
 
 app.post("/", (req, res) => {
   add({ params: req.body, tokens: tokensFromReq(req) })
     .then(() => res.send({}))
-    .catch(e => res.status(e.statusCode || 500).send(e));
+    .catch(e => {
+      logger.error("hmm: ", { e, stack: e.stack });
+      res.status(e.statusCode || 500).send(e);
+    });
 });
 
 module.exports = app;
