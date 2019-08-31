@@ -2,6 +2,7 @@
   "name": "@sustainer-network/event-store-add-function",
   "version": "0.0.0",
   "dependencies": {
+    "express": "^4.17.1",
     "@sustainer-network/event-store-add-service": "*",
     "@sustainer-network/tokens-from-req": "*"
   },
