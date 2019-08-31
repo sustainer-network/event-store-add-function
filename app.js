@@ -13,7 +13,7 @@ app.post("/", (req, res) => {
   add({ params: req.body, tokens: tokensFromReq(req) })
     .then(() => res.send({}))
     .catch(e => {
-      logger.error("some ee", { e });
+      logger.error("some ee", { e, stack: e.stack });
       res.status(e.statusCode || 500).send(e);
     });
 });
