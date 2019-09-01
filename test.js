@@ -29,7 +29,7 @@ describe("Event store", () => {
             action: "some-action",
             domain,
             service: _service,
-            issuedTimestamp: 333
+            issuedTimestamp: 123
           },
           createdTimestamp: 123
         },
