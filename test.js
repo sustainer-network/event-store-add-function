@@ -1,6 +1,6 @@
 const { expect } = require("chai");
-const { post } = require("@sustainer-network/request");
-const uuid = require("@sustainer-network/uuid");
+const { post } = require("@sustainers/request");
+const uuid = require("@sustainers/uuid");
 
 const url = "https://add.event-store.core.staging.sustainer.network";
 

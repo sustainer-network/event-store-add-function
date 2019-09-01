@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 
-const add = require("@sustainer-network/event-store-add-service");
-const tokensFromReq = require("@sustainer-network/tokens-from-req");
-const middleware = require("@sustainer-network/event-store-middleware");
+const add = require("@sustainers/event-store-add-service");
+const tokensFromReq = require("@sustainers/tokens-from-req");
+const middleware = require("@sustainers/event-store-middleware");
 
 middleware(app);
 
