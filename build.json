@@ -2,10 +2,10 @@
   "substitutions": {
     "_TITLE": "Add Event",
     "_SERVICE": "core",
-    "_NETWORK": "sustainers.io",
-    "_GCP_PROJECT": "sustainers",
+    "_NETWORK": "sustainers.net",
+    "_GCP_PROJECT": "sustainers-market-services",
     "_GCP_REGION": "us-central1",
-    "_GCP_DNS_ZONE": "io",
+    "_GCP_DNS_ZONE": "net",
     "_ESP_OPTIONS": "--cors_preset=basic,--cors_allow_methods=POST,--cors_allow_headers=Authorization Content-Type,--cors_allow_credentials",
     "_MEMORY": "128Mi"
   },
@@ -15,7 +15,7 @@
       "entrypoint": "bash",
       "args": [
         "-c",
-        "docker build -t us.gcr.io/staging-${_GCP_PROJECT}/${_SERVICE}.event-store.add ."
+        "docker build -t us.gcr.io/s-${_GCP_PROJECT}/${_SERVICE}.event-store.add ."
       ]
     },
     {
@@ -23,7 +23,7 @@
       "entrypoint": "bash",
       "args": [
         "-c",
-        "docker push us.gcr.io/staging-${_GCP_PROJECT}/${_SERVICE}.event-store.add"
+        "docker push us.gcr.io/s-${_GCP_PROJECT}/${_SERVICE}.event-store.add"
       ]
     },
     {
@@ -31,7 +31,7 @@
       "entrypoint": "bash",
       "args": [
         "-c",
-        "gcloud beta run deploy ${_SERVICE}-event-store-add --image=us.gcr.io/staging-${_GCP_PROJECT}/${_SERVICE}.event-store.add --platform=managed --memory=${_MEMORY} --allow-unauthenticated --project=staging-${_GCP_PROJECT} --region=${_GCP_REGION} --set-env-vars=NODE_ENV=staging,NETWORK=${_NETWORK},SERVICE=${_SERVICE},GCP_PROJECT=${_GCP_PROJECT},GCP_REGION=${_GCP_REGION},STORE_INSTANCE=event-store"
+        "gcloud beta run deploy ${_SERVICE}-event-store-add --image=us.gcr.io/s-${_GCP_PROJECT}/${_SERVICE}.event-store.add --platform=managed --memory=${_MEMORY} --allow-unauthenticated --project=s-${_GCP_PROJECT} --region=${_GCP_REGION} --set-env-vars=NODE_ENV=staging,NETWORK=${_NETWORK},SERVICE=${_SERVICE},GCP_PROJECT=${_GCP_PROJECT},GCP_REGION=${_GCP_REGION},STORE_INSTANCE=event-store"
       ]
     },
     {
@@ -71,7 +71,7 @@
       "entrypoint": "bash",
       "args": [
         "-c",
-        "gcloud beta run domain-mappings create --platform=managed --service=${_SERVICE}-event-store-add --domain=add.event-store.${_SERVICE}.staging.${_NETWORK} --project=staging-${_GCP_PROJECT} --region=${_GCP_REGION} || exit 0"
+        "gcloud beta run domain-mappings create --platform=managed --service=${_SERVICE}-event-store-add --domain=add.event-store.${_SERVICE}.staging.${_NETWORK} --project=s-${_GCP_PROJECT} --region=${_GCP_REGION} || exit 0"
       ]
     },
     {
@@ -87,7 +87,7 @@
       "entrypoint": "bash",
       "args": [
         "-c",
-        "gcloud beta run services update ${_SERVICE}-event-store-add --platform=managed --project=staging-${_GCP_PROJECT} --region=${_GCP_REGION} --update-env-vars=\"^|^ESP_ARGS=--rollout_strategy=managed,${_ESP_OPTIONS}\""
+        "gcloud beta run services update ${_SERVICE}-event-store-add --platform=managed --project=s-${_GCP_PROJECT} --region=${_GCP_REGION} --update-env-vars=\"^|^ESP_ARGS=--rollout_strategy=managed,${_ESP_OPTIONS}\""
       ]
     },
     {
@@ -95,7 +95,7 @@
       "entrypoint": "bash",
       "args": [
         "-c",
-        "gcloud pubsub topics create did-nothing.${_SERVICE} --project=staging-${_GCP_PROJECT} || exit 0"
+        "gcloud pubsub topics create did-nothing.${_SERVICE} --project=s-${_GCP_PROJECT} || exit 0"
       ]
     },
     {
