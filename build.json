@@ -6,7 +6,6 @@
     "_GCP_PROJECT": "sustainers-market-services",
     "_GCP_REGION": "us-central1",
     "_GCP_DNS_ZONE": "net",
-    "_ESP_OPTIONS": "--cors_preset=basic,--cors_allow_methods=POST,--cors_allow_headers=Authorization Content-Type,--cors_allow_credentials",
     "_MEMORY": "128Mi"
   },
   "steps": [
@@ -72,22 +71,6 @@
       "args": [
         "-c",
         "gcloud beta run domain-mappings create --platform=managed --service=${_SERVICE}-event-store-add --domain=add.event-store.${_SERVICE}.staging.${_NETWORK} --project=s-${_GCP_PROJECT} --region=${_GCP_REGION} || exit 0"
-      ]
-    },
-    {
-      "name": "gcr.io/cloud-builders/gcloud",
-      "entrypoint": "bash",
-      "args": [
-        "-c",
-        "sed -e 's/#_NAME/${_SERVICE}-event-store-add/g; s/#_HOST/add.event-store.${_SERVICE}.staging.${_NETWORK}/g; s/#_TITLE/${_TITLE}/g;' doc.json > doc.staging.json"
-      ]
-    },
-    {
-      "name": "gcr.io/cloud-builders/gcloud",
-      "entrypoint": "bash",
-      "args": [
-        "-c",
-        "gcloud beta run services update ${_SERVICE}-event-store-add --platform=managed --project=s-${_GCP_PROJECT} --region=${_GCP_REGION} --update-env-vars=\"^|^ESP_ARGS=--rollout_strategy=managed,${_ESP_OPTIONS}\""
       ]
     },
     {
@@ -170,22 +153,6 @@
       "args": [
         "-c",
         "gcloud beta run domain-mappings create --platform=managed --service=${_SERVICE}-event-store-add --domain=add.event-store.${_SERVICE}.${_NETWORK} --project=${_GCP_PROJECT} --region=${_GCP_REGION} || exit 0"
-      ]
-    },
-    {
-      "name": "gcr.io/cloud-builders/gcloud",
-      "entrypoint": "bash",
-      "args": [
-        "-c",
-        "sed -e 's/#_NAME/${_SERVICE}-event-store-add/g; s/#_HOST/add.event-store.${_SERVICE}.${_NETWORK}/g; s/#_TITLE/${_TITLE}/g;' doc.json > doc.production.json"
-      ]
-    },
-    {
-      "name": "gcr.io/cloud-builders/gcloud",
-      "entrypoint": "bash",
-      "args": [
-        "-c",
-        "gcloud beta run services update ${_SERVICE}-event-store-add --platform=managed --project=${_GCP_PROJECT} --region=${_GCP_REGION} --update-env-vars=\"^|^ESP_ARGS=--rollout_strategy=managed,${_ESP_OPTIONS}\""
       ]
     }
   ]

@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const { post } = require("@sustainers/request");
 const uuid = require("@sustainers/uuid");
 
-const url = "https://add.event-store.core.staging.sustainers.io";
+const url = "https://add.event-store.core.staging.sustainers.net";
 
 const domain = "domain";
 const _service = "the-service-which-stores-this-event";
